@@ -117,7 +117,7 @@ def send_data():
             status_label.update()
         else:
             print('emoji: nope:', r.text)
-            status.set('Emoji: nope: ' + r.status_code)
+            status.set('Emoji: nope: ' + str(r.status_code))
             status_label.update()
     status.set('Waiting for input.')
 
