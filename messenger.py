@@ -61,47 +61,51 @@ def send_data():
         status_label.update()
 
     if c:
-        cookies = {
-            'datr': '5f6uVqVsvp1VLKVMSvJ6kxr4',
-            'lu': 'gA9hlnwpWNBUMX8aSQZi1SXg',
-            'c_user': my_id,
-            'xs': '127%3AQNC_6NFGhIcvYg%3A2%3A1454309099%3A2850',
-            'csm': '2',
-            's': 'Aa7-vIslzkDs2ekP',
-            '__lfcc': '1',
-            'p': '-2',
-            '__lncc_l.facebook.com': '1',
-            'act': '1458119476318%2F7',
-            'presence': 'EDvF3EtimeF1458119477EuserFA21B{1}A2EstateFDutF1458119477222CEchFDp_5f1B0956316465'
-                        '8F137CC',
-        }
+        # cookies = {
+        #     'datr': '5f6uVqVsvp1VLKVMSvJ6kxr4',
+        #     'lu': 'gA9hlnwpWNBUMX8aSQZi1SXg',
+        #     'c_user': my_id,
+        #     'xs': '127%3AQNC_6NFGhIcvYg%3A2%3A1454309099%3A2850',
+        #     'csm': '2',
+        #     's': 'Aa7-vIslzkDs2ekP',
+        #     '__lfcc': '1',
+        #     'p': '-2',
+        #     '__lncc_l.facebook.com': '1',
+        #     'act': '1458119476318%2F7',
+        #     'presence':
+        #         'EDvF3EtimeF1458119477EuserFA21B{0}A2EstateFDutF1458119477222CEchFDp_5f1B09563164658F137CC'.format(
+        #             my_id
+        #         ),
+        # }
 
-        headers = {
-            'Origin': 'https://www.messenger.com',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.'
-                          '2623.87 Safari/537.36',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': '*/*',
-            'Referer': 'https://www.messenger.com/t/' + thread_id,
-            'Connection': 'keep-alive',
-        }
-
-        data = 'color_choice=%23{0}&thread_or_other_fbid={1}&__user={3}&__a=1&__dyn=7AzkXh8Z38ogDxKy1' \
-               'l0BwRyaF3oyfJLFwgoqwWhEoyUnwgU9GGEcVovkwy3eE99XDG4UiwExW14wXxumFEW2O9xifxa5U&__req=11&fb_dtsg=AQEUx' \
-               'N8vTec6%3AAQGG9e2hzCgE&ttstamp={2}&__rev=2231853'.format(c, thread_id, ts, my_id)
+        # headers = {
+        #     'Origin': 'https://www.messenger.com',
+        #     'Accept-Encoding': 'gzip, deflate',
+        #     'Accept-Language': 'en-US,en;q=0.8',
+        #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.'
+        #                   '2623.87 Safari/537.36',
+        #     'Content-Type': 'application/x-www-form-urlencoded',
+        #     'Accept': '*/*',
+        #     'Referer': 'https://www.messenger.com/t/' + thread_id,
+        #     'Connection': 'keep-alive',
+        # }
+        #
+        # data = 'color_choice=%23{0}&thread_or_other_fbid={1}&__user={3}&__a=1&__dyn=7AzkXh8Z38ogDxKy1' \
+        #        'l0BwRyaF3oyfJLFwgoqwWhEoyUnwgU9GGEcVovkwy3eE99XDG4UiwExW14wXxumFEW2O9xifxa5U&__req=11&fb_dtsg=AQEUx' \
+        #        'N8vTec6%3AAQGG9e2hzCgE&ttstamp={2}&__rev=2231853'.format(c, thread_id, ts, my_id)
+        from context import headers, data
+        data = data[:16] + c + data[16+6:]
         r = requests.post(
             'https://www.messenger.com/messaging/save_thread_color/?source=thread_settings&__pc=EXP1%3Amessengerdot'
             'com_pkg&dpr=1',
-            headers=headers, cookies=cookies, data=data)
+            headers=headers, data=data)
         if r.status_code == 200:
-            print('color: done: 200')
+            print('color: done:', r.text)
             status.set('Color: done: 200')
             status_label.update()
         else:
-            print('color: nope:', r.status_code)
-            status.set('Color: nope: ' + r.status_code)
+            print('color: nope:', r.status_code, r.text)
+            status.set('Color: nope: ' + str(r.status_code))
             status_label.update()
     if e[:3] == '\\t ':
         e = '%' + ' E2 80 89 '.join(['F0 9F 87 ' + str(hex(ord(x) + 69))[2:].lower() for x in e[3:]])
@@ -137,7 +141,7 @@ def send_data():
             status.set('Emoji: done: 200')
             status_label.update()
         else:
-            print('emoji: nope:', r.status_code)
+            print('emoji: nope:', r.text)
             status.set('Emoji: nope: ' + r.status_code)
             status_label.update()
     status.set('Waiting for input.')
