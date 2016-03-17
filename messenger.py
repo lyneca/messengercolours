@@ -72,7 +72,7 @@ def send_data():
             'p': '-2',
             '__lncc_l.facebook.com': '1',
             'act': '1458119476318%2F7',
-            'presence': 'EDvF3EtimeF1458119477EuserFA21B09563164658A2EstateFDutF1458119477222CEchFDp_5f1B0956316465'
+            'presence': 'EDvF3EtimeF1458119477EuserFA21B{1}A2EstateFDutF1458119477222CEchFDp_5f1B0956316465'
                         '8F137CC',
         }
 
@@ -119,9 +119,9 @@ def send_data():
             'referer': 'https://www.messenger.com/t/' + str(thread_id),
             'authority': 'www.messenger.com',
             'cookie': 'datr=5f6uVqVsvp1VLKVMSvJ6kxr4; lu=gA9hlnwpWNBUMX8aSQZi1SXg; __lfcc=1; __lncc_l.facebook.com='
-                      '1; c_user={}; xs=127%3AQNC_6NFGhIcvYg%3A2%3A1454309099%3A2850; csm=2; s=Aa7-vIs'
-                      'lzkDs2ekP; p=-2; act=1458120929814%2F49; presence=EDvF3EtimeF1458120934EuserFA21B09563164658'
-                      'A2EstateFDutF1458120934028CEchFDp_5f1B09563164658F939CC'.format(my_id),
+                      '1; c_user={0}; xs=127%3AQNC_6NFGhIcvYg%3A2%3A1454309099%3A2850; csm=2; s=Aa7-vIs'
+                      'lzkDs2ekP; p=-2; act=1458120929814%2F49; presence=EDvF3EtimeF1458120934EuserFA21B{1}'
+                      'A2EstateFDutF1458120934028CEchFDp_5f1B{1}F939CC'.format(my_id, my_id[-11:]),
         }
 
         data = 'emoji_choice={0}&thread_or_other_fbid={1}&__user={3}&__a=1&__dyn=7AzkXh8Z38ogDxKy1l0BwR' \
